@@ -23,6 +23,18 @@ router.get('/:file/comments', ((req, res) => {
     })
 }));
 
+router.get('/:file/asset', (req, res) => {
+    mongo_get((result: any) => {
+        if(result === null){
+            new ErrorResponse("Datei nicht gefunden", 404);
+            return;
+        }
+        res.sendFile(`${__dirname}/../files/` + result.file_name);
+    }, getDatabase().collection('file_comments'), {
+        file: req.params.file
+    });
+});
+
 router.post('/upload', async (req, res) => {
     try{
         if(!req.files){

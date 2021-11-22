@@ -37,7 +37,8 @@ router.post('/auth', (req, res) => {
             return;
          }
          if(result2){
-            successResponse(res, new SuccessResponse());
+            delete result.password;
+            successResponse(res, new SuccessResponse(result));
          }else{
             errorResponse(res, new ErrorResponse("Falsches Passwort", 401));
          }

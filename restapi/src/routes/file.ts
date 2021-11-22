@@ -60,6 +60,7 @@ router.post('/upload', async (req, res) => {
             description: req.body.description,
             user: req.body.user,
             course: req.body.course,
+            topic: req.body.topic,
             modified: created,
             created: created
         });

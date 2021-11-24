@@ -60,7 +60,7 @@ router.get('/:id/classes', (req, res) => {
       })
       new SuccessResponse(resData).throw(res);
    }, getDatabase().collection("user_in_class"), {
-      _id: new ObjectId(req.params.id)
+      user: req.params.id
    })
 });
 
@@ -76,7 +76,7 @@ router.get('/:id/courses', (req, res) => {
       })
       new SuccessResponse(resData).throw(res);
    }, getDatabase().collection("user_in_course"), {
-      _id: new ObjectId(req.params.id)
+      user: req.params.id
    })
 });
 

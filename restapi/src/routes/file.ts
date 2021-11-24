@@ -33,7 +33,7 @@ router.get('/:file/asset', (req, res) => {
         const fileType = result.file_name.split(".").pop();
         console.log("load: " + __dirname  + "/../files/" + result._id + "." + fileType);
         res.sendFile(__dirname + '/../files/' + result._id + '.' + fileType);
-    }, getDatabase().collection('file_comments'), {
+    }, res.locals.collection, {
         file: req.params.file
     });
 });

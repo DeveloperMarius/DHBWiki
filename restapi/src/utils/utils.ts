@@ -1,6 +1,6 @@
 import {Collection, MongoError, ObjectId} from "mongodb";
 import {SuccessResponse, successResponse} from "./success_response";
-import {Router} from "express";
+import express, {Router} from "express";
 import {ErrorResponse, errorResponse} from "./error_response";
 import {getDatabase} from "../database";
 
@@ -57,13 +57,16 @@ export function mongo_update(callback: (result: {}|null) => any, collection: Col
         })
 }
 
-export function attach_default_routes(router: Router, mongoCollection: string){
-
+export function init_router(mongoCollection: string): Router{
+    let router = express.Router();
     router.use((req, res, next) => {
         res.locals.collection = getDatabase().collection(mongoCollection);
         next();
     });
+    return router;
+}
 
+export function attach_default_routes(router: Router){
     router.post('/', (req, res) => {
         const collection : Collection = res.locals.collection;
         const reqData : {} = req.body;

@@ -1,9 +1,9 @@
 import express from "express";
-import {attach_default_routes} from "../utils/utils";
+import {attach_default_routes, init_router} from "../utils/utils";
 
-const router = express.Router();
+const router = init_router("classes");
 
-attach_default_routes(router, "classes");
+attach_default_routes(router);
 
 // TODO getCourses
 

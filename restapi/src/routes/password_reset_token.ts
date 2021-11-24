@@ -1,8 +1,8 @@
 import express from "express";
-import {attach_default_routes} from "../utils/utils";
+import {attach_default_routes, init_router} from "../utils/utils";
 
-const router = express.Router();
+const router = init_router("password_reset_tokens");
 
-attach_default_routes(router, "password_reset_tokens");
+attach_default_routes(router);
 
 export default router;

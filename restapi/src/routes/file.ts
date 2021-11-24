@@ -1,12 +1,12 @@
 import express from "express";
-import {attach_default_routes, mongo_get, mongo_get_all, mongo_post} from "../utils/utils";
+import {attach_default_routes, init_router, mongo_get, mongo_get_all, mongo_post} from "../utils/utils";
 import {getDatabase} from "../database";
 import {errorResponse, ErrorResponse} from "../utils/error_response";
 import {SuccessResponse} from "../utils/success_response";
 import {UploadedFile} from "express-fileupload";
 import {ObjectId} from "mongodb";
 
-const router = express.Router();
+const router = init_router("files");
 
 router.get('/:file/comments', ((req, res) => {
     mongo_get_all((result: any) => {
@@ -95,6 +95,6 @@ router.get('/course/:id', (req, res) => {
     })
 });
 
-attach_default_routes(router, "files");
+attach_default_routes(router);
 
 export default router;

@@ -3,10 +3,10 @@ import {getDatabase} from "../database";
 import {Collection, AnyError, MongoError, ObjectId} from "mongodb";
 import {ErrorResponse, errorResponse} from "../utils/error_response";
 import {SuccessResponse, successResponse} from "../utils/success_response";
-import {attach_default_routes, mongo_get, mongo_get_all, mongo_post, mongo_update} from "../utils/utils";
+import {attach_default_routes, init_router, mongo_get, mongo_get_all, mongo_post, mongo_update} from "../utils/utils";
 import bcrypt from "bcrypt";
 
-const router = express.Router();
+const router = init_router("users");
 
 router.post('/', (req, res, next) => {
    bcrypt.hash(req.body.password, 5, (error, hash) => {
@@ -78,6 +78,6 @@ router.get('/:id/courses', (req, res) => {
    })
 });
 
-attach_default_routes(router, "users");
+attach_default_routes(router);
 
 export default router;

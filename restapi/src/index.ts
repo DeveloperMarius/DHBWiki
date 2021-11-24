@@ -27,7 +27,13 @@ app.use(fileUpload({
     createParentPath: true
 }));
 
-app.use(cors());
+app.use(cors({
+    optionsSuccessStatus: 200,
+    origin: (origin, callback) => {
+        console.log("cors", origin);
+        callback(null, origin);
+    }
+}));
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

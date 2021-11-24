@@ -11,7 +11,7 @@ const router = express.Router();
 router.get('/:file/comments', ((req, res) => {
     mongo_get_all((result: any) => {
         if(result === null){
-            new ErrorResponse("Datei nicht gefunden", 404);
+            new ErrorResponse("Datei nicht gefunden", 404).throw(res);
             return;
         }
         /*let resData : (number|string)[] = [];
@@ -27,7 +27,7 @@ router.get('/:file/comments', ((req, res) => {
 router.get('/:file/asset', (req, res) => {
     mongo_get((result: any) => {
         if(result === null){
-            new ErrorResponse("Datei nicht gefunden", 404);
+            new ErrorResponse("Datei nicht gefunden", 404).throw(res);
             return;
         }
         res.sendFile(`${__dirname}/../files/` + result.file_name);
@@ -39,17 +39,17 @@ router.get('/:file/asset', (req, res) => {
 router.post('/upload', async (req, res) => {
     try{
         if(!req.files){
-            new ErrorResponse("Keine Dateien gefunden", 404);
+            new ErrorResponse("Keine Dateien gefunden", 404).throw(res);
             return;
         }
-        let _file = req.files.file;
+        const _file = req.files.file;
         if(Array.isArray(_file)){
-            new ErrorResponse("File array instead of file found", 400);
+            new ErrorResponse("File array instead of file found", 400).throw(res);
             return;
         }
-        let file : UploadedFile = _file;
-        let created = Date.now();
-        let fileType = file.name.split(".").pop();
+        const file : UploadedFile = _file;
+        const created = Date.now();
+        const fileType = file.name.split(".").pop();
         mongo_post((result: any) => {
             file.mv("../files/" + result._id + "." + fileType);
             new SuccessResponse(result).throw(res);
@@ -63,11 +63,11 @@ router.post('/upload', async (req, res) => {
             course: req.body.course,
             topic: req.body.topic,
             modified: created,
-            created: created
+            created
         });
     }catch (error){
         console.log(error);
-        new ErrorResponse("Fehler beim upload!", 500);
+        new ErrorResponse("Fehler beim upload!", 500).throw(res);
     }
 });
 

@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
 });
 
 router.post('/auth', (req, res) => {
-   let filter : {username?: string, email?: string} = {};
+   const filter : {username?: string, email?: string} = {};
    if(req.body.username !== undefined){
       filter.username = req.body.username;
    }
@@ -52,7 +52,7 @@ router.get('/:id/classes', (req, res) => {
          new ErrorResponse("Benutzer nicht gefunden", 404).throw(res);
          return;
       }
-      let resData : (number|string)[] = [];
+      const resData : (number|string)[] = [];
       result.forEach((dataSet: {user: number|string, class: number|string}) => {
          resData.push(dataSet.class);
       })
@@ -68,7 +68,7 @@ router.get('/:id/courses', (req, res) => {
          new ErrorResponse("Benutzer nicht gefunden", 404).throw(res);
          return;
       }
-      let resData : (number|string)[] = [];
+      const resData : (number|string)[] = [];
       result.forEach((dataSet: {user: number|string, course: number|string}) => {
          resData.push(dataSet.course);
       })

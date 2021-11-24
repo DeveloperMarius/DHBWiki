@@ -5,7 +5,7 @@ import {ErrorResponse, errorResponse} from "./error_response";
 import {getDatabase} from "../database";
 
 export function mongo_get(callback: (result: {}|null) => any, collection: Collection, filter: number|string|{}){
-    if(typeof filter == 'number' || typeof filter == 'string'){
+    if(typeof filter === 'number' || typeof filter === 'string'){
         filter = {
             _id: new ObjectId(filter)
         };

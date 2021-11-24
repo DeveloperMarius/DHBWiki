@@ -5,6 +5,7 @@ import {errorResponse, ErrorResponse} from "../utils/error_response";
 import {SuccessResponse} from "../utils/success_response";
 import {UploadedFile} from "express-fileupload";
 import {ObjectId} from "mongodb";
+import path from "path";
 
 const router = init_router("files");
 
@@ -32,7 +33,7 @@ router.get('/:file/asset', (req, res) => {
         }
         const fileType = result.file_name.split(".").pop();
         console.log("load: " + __dirname  + "/../files/" + result._id + "." + fileType);
-        res.sendFile(__dirname + '/../files/' + result._id + '.' + fileType);
+        res.sendFile(path.resolve(__dirname + '/../files/' + result._id + '.' + fileType));
     }, res.locals.collection, {
         _id: new ObjectId(req.params.file)
     });

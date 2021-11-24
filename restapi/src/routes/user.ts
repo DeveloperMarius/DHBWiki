@@ -30,6 +30,7 @@ router.post('/auth', (req, res) => {
    mongo_get((result: any) => {
       if(result === null){
          errorResponse(res, new ErrorResponse("Benutzer nicht gefunden", 404));
+         return;
       }
       bcrypt.compare(req.body.password, result.password, (error, result2) => {
          if(error !== undefined){
@@ -41,6 +42,7 @@ router.post('/auth', (req, res) => {
             successResponse(res, new SuccessResponse(result));
          }else{
             errorResponse(res, new ErrorResponse("Falsches Passwort", 401));
+            return;
          }
       });
    }, res.locals.collection, filter);

@@ -20,7 +20,7 @@ router.get('/:file/comments', ((req, res) => {
         });*/
         new SuccessResponse(result).throw(res);
     }, getDatabase().collection('file_comments'), {
-        file: req.params.file
+        _id: new ObjectId(req.params.file)
     })
 }));
 

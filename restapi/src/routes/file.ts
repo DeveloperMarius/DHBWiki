@@ -51,7 +51,8 @@ router.post('/upload', async (req, res) => {
         const created = Date.now();
         const fileType = file.name.split(".").pop();
         mongo_post((result: any) => {
-            file.mv("../files/" + result._id + "." + fileType);
+            console.log("move to: " + __dirname  + "../files/" + result._id + "." + fileType);
+            file.mv(__dirname  + "../files/" + result._id + "." + fileType);
             new SuccessResponse(result).throw(res);
         }, res.locals.collection, {
             file_name: file.name,
@@ -78,8 +79,8 @@ router.get('/user/:id', (req, res) => {
             return;
         }
         new SuccessResponse(result).throw(res);
-    }, getDatabase().collection("files"), {
-        user: new ObjectId(req.params.id)
+    }, res.locals.collection, {
+        user: req.params.id
     })
 });
 
@@ -90,8 +91,8 @@ router.get('/course/:id', (req, res) => {
             return;
         }
         new SuccessResponse(result).throw(res);
-    }, getDatabase().collection("files"), {
-        course: new ObjectId(req.params.id)
+    }, res.locals.collection, {
+        course: req.params.id
     })
 });
 

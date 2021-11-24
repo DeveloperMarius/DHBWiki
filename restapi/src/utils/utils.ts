@@ -58,7 +58,7 @@ export function mongo_update(callback: (result: {}|null) => any, collection: Col
 }
 
 export function init_router(mongoCollection: string): Router{
-    let router = express.Router();
+    const router = express.Router();
     router.use((req, res, next) => {
         res.locals.collection = getDatabase().collection(mongoCollection);
         next();

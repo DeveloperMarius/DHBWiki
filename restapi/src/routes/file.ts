@@ -30,7 +30,8 @@ router.get('/:file/asset', (req, res) => {
             new ErrorResponse("Datei nicht gefunden", 404).throw(res);
             return;
         }
-        res.sendFile(`${__dirname}/../files/` + result.file_name);
+        const fileType = result.file_name.split(".").pop();
+        res.sendFile(__dirname + '../files/' + result._id + '.' + fileType);
     }, getDatabase().collection('file_comments'), {
         file: req.params.file
     });

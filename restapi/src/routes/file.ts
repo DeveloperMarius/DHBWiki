@@ -4,6 +4,7 @@ import {getDatabase} from "../database";
 import {errorResponse, ErrorResponse} from "../utils/error_response";
 import {SuccessResponse} from "../utils/success_response";
 import {UploadedFile} from "express-fileupload";
+import {ObjectId} from "mongodb";
 
 const router = express.Router();
 
@@ -68,7 +69,31 @@ router.post('/upload', async (req, res) => {
         console.log(error);
         new ErrorResponse("Fehler beim upload!", 500);
     }
-})
+});
+
+router.get('/user/:id', (req, res) => {
+    mongo_get_all((result: any) => {
+        if(result === null){
+            new ErrorResponse("Fehler", 404).throw(res);
+            return;
+        }
+        new SuccessResponse(result).throw(res);
+    }, getDatabase().collection("files"), {
+        user: new ObjectId(req.params.id)
+    })
+});
+
+router.get('/course/:id', (req, res) => {
+    mongo_get_all((result: any) => {
+        if(result === null){
+            new ErrorResponse("Fehler", 404).throw(res);
+            return;
+        }
+        new SuccessResponse(result).throw(res);
+    }, getDatabase().collection("files"), {
+        course: new ObjectId(req.params.id)
+    })
+});
 
 attach_default_routes(router, "files");
 

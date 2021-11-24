@@ -16,8 +16,23 @@ import passwordResetTokenRoutes from "./routes/password_reset_token";
 import userRoutes from "./routes/user";
 import {AnyError, Db} from "mongodb";
 const app = express();
-const port = 8080;
+const port = 4001;
 const router = express.Router();
+
+const options: cors.CorsOptions = {
+    allowedHeaders: [
+        'Origin',
+        'X-Requested-With',
+        'Content-Type',
+        'Accept',
+        'X-Access-Token',
+    ],
+    credentials: true,
+    methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+    origin: '*',
+    preflightContinue: false,
+};
+
 
 router.get("/", (req, res) => {
     res.send( "Hello world!" );
@@ -27,13 +42,9 @@ app.use(fileUpload({
     createParentPath: true
 }));
 
-app.use(cors({
-    optionsSuccessStatus: 200,
-    origin: (origin, callback) => {
-        console.log("cors", origin);
-        callback(null, origin);
-    }
-}));
+app.use(cors(options));
+router.use(cors(options));
+router.options('*', cors(options));
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

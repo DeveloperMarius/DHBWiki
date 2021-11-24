@@ -27,6 +27,9 @@ router.post('/auth', (req, res) => {
    if(req.body.email !== undefined){
       filter.email = req.body.email;
    }
+
+   console.log(filter);
+
    mongo_get((result: any) => {
       if(result === null){
          errorResponse(res, new ErrorResponse("Benutzer nicht gefunden", 404));

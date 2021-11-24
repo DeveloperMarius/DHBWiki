@@ -20,7 +20,7 @@ router.get('/:file/comments', ((req, res) => {
         });*/
         new SuccessResponse(result).throw(res);
     }, getDatabase().collection('file_comments'), {
-        _id: new ObjectId(req.params.file)
+        file: req.params.file
     })
 }));
 
@@ -34,7 +34,7 @@ router.get('/:file/asset', (req, res) => {
         console.log("load: " + __dirname  + "/../files/" + result._id + "." + fileType);
         res.sendFile(__dirname + '/../files/' + result._id + '.' + fileType);
     }, res.locals.collection, {
-        file: req.params.file
+        _id: new ObjectId(req.params.file)
     });
 });
 

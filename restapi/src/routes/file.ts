@@ -31,7 +31,7 @@ router.get('/:file/asset', (req, res) => {
             return;
         }
         const fileType = result.file_name.split(".").pop();
-        res.sendFile(__dirname + '../files/' + result._id + '.' + fileType);
+        res.sendFile(__dirname + '/../files/' + result._id + '.' + fileType);
     }, getDatabase().collection('file_comments'), {
         file: req.params.file
     });
@@ -52,8 +52,8 @@ router.post('/upload', async (req, res) => {
         const created = Date.now();
         const fileType = file.name.split(".").pop();
         mongo_post((result: any) => {
-            console.log("move to: " + __dirname  + "../files/" + result._id + "." + fileType);
-            file.mv(__dirname  + "../files/" + result._id + "." + fileType);
+            console.log("move to: " + __dirname  + "/../files/" + result._id + "." + fileType);
+            file.mv(__dirname  + "/../files/" + result._id + "." + fileType);
             new SuccessResponse(result).throw(res);
         }, res.locals.collection, {
             file_name: file.name,

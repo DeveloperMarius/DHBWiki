@@ -3,3 +3,4 @@
 /.idea
 /restapi/dist
 /restapi/node_modules
+/restapi/res/.env

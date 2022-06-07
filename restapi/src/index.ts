@@ -14,6 +14,7 @@ import fileRoutes from "./routes/file";
 import fileCommentRoutes from "./routes/file_comment";
 import passwordResetTokenRoutes from "./routes/password_reset_token";
 import userRoutes from "./routes/user";
+import testRoutes from "./routes/test";
 import {AnyError, Db} from "mongodb";
 import {config as dotenvConfig} from "dotenv";
 import cookieParser from "cookie-parser"
@@ -75,13 +76,15 @@ app.use("/api/file", fileRoutes);
 app.use("/api/file/comment", fileCommentRoutes);
 app.use("/api/user/password_reset", passwordResetTokenRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/test", testRoutes);
 
 initDatabase((error: AnyError|null, db: Db) => {
     if(error){
-        throw error;
+        console.error("Fehler beim herstellen der Verbindung zur Datenbank!\n", error.stack);
+        // throw error;
     }
 
     app.listen(port, () => {
-        console.log(`server started at http://localhost:${ port }`);
+        console.log(`Server started at http://localhost:${ port }`);
     });
 })

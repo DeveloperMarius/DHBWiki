@@ -5,8 +5,9 @@ import {Application} from "express";
 
 let _db: Db;
 
-export function getDatabase(): Db{
-    assert.ok(_db, "Die Verbindung zu der Datenbank wurde noch nicht hergestellt.");
+export function getDatabase(throwError: boolean = true): Db{
+    if(throwError)
+        assert.ok(_db, "Die Verbindung zu der Datenbank wurde noch nicht hergestellt.");
     return _db;
 }
 

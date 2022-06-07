@@ -28,7 +28,10 @@ router.post('/auth', (req, res) => {
       filter.email = req.body.email;
    }
 
-   console.log(filter);
+   if(req.session.userid !== undefined){
+      errorResponse(res, new ErrorResponse("Sie sind bereits angemeldet", 403));
+      return;
+   }
 
    mongo_get((result: any) => {
       if(result === null){
@@ -41,6 +44,7 @@ router.post('/auth', (req, res) => {
             return;
          }
          if(result2){
+            req.session.userid = result._id.toString();
             delete result.password;
             successResponse(res, new SuccessResponse(result));
          }else{

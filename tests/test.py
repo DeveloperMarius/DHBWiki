@@ -68,7 +68,6 @@ def test_feedback(driver):
     sleep(1)
 
     email_input = container.find_element(By.NAME, "email")
-    driver.execute_script("console.log(arguments[0])", email_input)
     email_input.send_keys("tester@dhbwiki.de")
 
     feedback_input = container.find_element(By.NAME, "feedback")

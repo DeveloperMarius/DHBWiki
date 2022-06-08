@@ -14,6 +14,7 @@ router.post('/', (req, res, next) => {
          errorResponse(res, new ErrorResponse("Fehler beim hashen den Passworts", 500));
          return;
       }
+      req.body.position = 1;
       req.body.password = hash;
       next();
    });

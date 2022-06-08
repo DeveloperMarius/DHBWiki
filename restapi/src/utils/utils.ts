@@ -57,6 +57,20 @@ export function mongo_update(callback: (result: {}|null) => any, collection: Col
         })
 }
 
+export function mongo_delete(callback: (result: {}|null) => any, collection: Collection, id: number|string, data: {}){
+    collection.deleteOne({
+        _id: new ObjectId(id)
+    }, data)
+        .then(result => {
+            console.log("res", result);
+            return callback(result);
+        })
+        .catch((error: MongoError) => {
+            console.error(error);
+            return callback(null);
+        })
+}
+
 export function init_router(mongoCollection: string): Router{
     const router = express.Router();
     router.use((req, res, next) => {
@@ -105,6 +119,18 @@ export function attach_default_routes(router: Router){
         const collection : Collection = res.locals.collection;
         console.log("req", req.body);
         mongo_update((result: any) => {
+            if(result === null){
+                errorResponse(res, new ErrorResponse(`Error`, 403));
+                return;
+            }
+            successResponse(res, new SuccessResponse(result));
+        }, collection, req.params.id, req.body);
+    });
+
+    router.delete('/:id', (req, res) => {
+        const collection : Collection = res.locals.collection;
+        console.log("req", req.body);
+        mongo_delete((result: any) => {
             if(result === null){
                 errorResponse(res, new ErrorResponse(`Error`, 403));
                 return;

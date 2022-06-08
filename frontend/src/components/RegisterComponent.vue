@@ -90,7 +90,12 @@ export default {
           "Registrieren fehlgeschlagen: Passwörter stimmen nicht überein"
         );
       axios
-        .post("https://dhbwiki.th1nk.media/api/user", this.user)
+        .post("https://dhbwiki.th1nk.media/api/user", this.user, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        })
         .then((res) => {
           localStorage.setItem("session", res.data.data._id);
           this.$router.push("/kurse");

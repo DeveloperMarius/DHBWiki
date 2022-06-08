@@ -38,7 +38,9 @@ export default {
   <div id="kurse">
     <header>
       <nav>
-        <router-link src="../img/logo.svg" tag="img" to="/" />
+        <router-link to="/" class="logo">
+          <img src="../assets/logo.svg" alt="DHBWikiLogo"
+        /></router-link>
         <div class="informations">
           <p>{{ mitschrift.topic + " - " + mitschrift.title }}</p>
           <small>{{ formatDate(new Date(mitschrift.created)) }}</small>

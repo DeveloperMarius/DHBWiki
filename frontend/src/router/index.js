@@ -14,42 +14,32 @@ const routes = [
     path: "/kurse",
     name: "Kurse",
     component: () => import("@/views/KurseView"),
-    beforeEnter(to, from, next) {
-      if (localStorage.getItem("userid")) {
-        next();
-      } else {
-        next("/");
-      }
-    },
+    beforeEnter: is_auth,
   },
   {
     path: "/kurse/:fach",
     name: "Fach",
     component: () => import("@/views/FachView"),
-    beforeEnter(to, from, next) {
-      if (localStorage.getItem("userid")) {
-        next();
-      } else {
-        next("/");
-      }
-    },
+    beforeEnter: is_auth,
   },
   {
     path: "/kurse/:fach/:id",
     name: "Dokument",
     component: () => import("@/views/DokumentView"),
-    beforeEnter(to, from, next) {
-      if (localStorage.getItem("userid")) {
-        next();
-      } else {
-        next("/");
-      }
-    },
+    beforeEnter: is_auth,
   },
 ];
 
 const router = new VueRouter({
   routes,
 });
+
+function is_auth(to, from, next) {
+  if (localStorage.getItem("userid")) {
+    next();
+  } else {
+    next("/");
+  }
+}
 
 export default router;

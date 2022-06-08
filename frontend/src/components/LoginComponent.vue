@@ -52,7 +52,12 @@ export default {
     ...mapActions(["insert"]),
     login() {
       axios
-        .post("https://dhbwiki.th1nk.media/api/user/auth", this.user)
+        .post("https://dhbwiki.th1nk.media/api/user/auth", this.user, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        })
         .then((res) => {
           localStorage.setItem("userid", res.data.data._id);
           this.$router.push("/kurse");

@@ -69,7 +69,12 @@ dotenvConfig({
 app.use(expressSession({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24,
+        sameSite: 'none',
+        secure: true,
+        httpOnly: false
+    },
     resave: false
 }));
 

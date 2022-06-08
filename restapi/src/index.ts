@@ -34,7 +34,7 @@ const options: cors.CorsOptions = {
     ],
     credentials: true,
     methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-    origin: '*',
+    origin: 'dhbwiki.de,localhost:8080',
     preflightContinue: false,
 };
 

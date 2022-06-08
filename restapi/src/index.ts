@@ -34,7 +34,13 @@ const options: cors.CorsOptions = {
     ],
     credentials: true,
     methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-    origin: 'dhbwiki.de,localhost:8080',
+    origin: function(origin, callback) {
+        if(['https://localhost:8080', 'http://localhost:8080', 'https://dhbwiki.de'].indexOf(origin) !== -1 || !origin){
+            callback(null, true);
+        }else{
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     preflightContinue: false,
 };
 

@@ -54,7 +54,7 @@ export default {
         topic: "",
         title: "",
         description: "",
-        user: localStorage.getItem("userid"),
+        user: "",
         file: "",
       },
     };
@@ -68,6 +68,7 @@ export default {
       }
     },
     uploadFile() {
+      this.user = this.$store.state.user._id;
       let form = document.getElementById("upload");
       let formData = new FormData(form);
       formData.append("file", this.file);

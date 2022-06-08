@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import Login from "@/components/LoginComponent.vue";
 import Register from "../components/RegisterComponent.vue";
 
@@ -13,14 +13,17 @@ export default {
       background: 0,
       sitzenbleiben: 0,
       login: false,
-      loggedin: localStorage.getItem("userid"),
+      feedback: {
+        email: null,
+        text: null,
+      },
     };
   },
   mounted() {
     this.names.forEach((name) => this.set(name));
   },
   methods: {
-    ...mapActions(["set"]),
+    ...mapActions(["send_feedback"]),
     handleScroll() {
       this.sitzenbleiben =
         this.window.scrollY -
@@ -31,14 +34,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["get"]),
-    data() {
-      let data = [];
-      this.names.forEach((name) => {
-        data[name] = this.get(name);
-      });
-      return data;
-    },
+    loggedin: () => localStorage.getItem("dhbwiki_jwt"),
   },
   components: {
     Login,
@@ -120,9 +116,30 @@ export default {
       <div id="feedback">
         <h1>Feedback</h1>
         <p>Deine Meinung ist uns wichig. Schicke uns jetzt dein Feedback!</p>
-        <input name="email" placeholder="Max@Mustermann.de" type="text" />
-        <textarea cols="5" name="feedback" rows="10"></textarea>
-        <a href="#abschicken">Abschicken</a>
+        <form @submit.prevent="">
+          <input
+            name="email"
+            placeholder="Max@Mustermann.de"
+            type="text"
+            v-model="feedback.email"
+          />
+          <textarea
+            cols="5"
+            name="feedback"
+            rows="10"
+            v-model="feedback.text"
+          ></textarea>
+          <a
+            @click.prevent="
+              if (!feedback.email || !feedback.text) return;
+              send_feedback(feedback);
+              feedback.email = '';
+              feedback.text = '';
+              alert('Danke für dein Feedback!');
+            "
+            >Abschicken</a
+          >
+        </form>
       </div>
     </main>
   </div>
@@ -132,8 +149,8 @@ export default {
 header {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  background: url("../assets/HeaderBG.png");
+  height: 56.25vw;
+  background: url("../assets/HeaderBG.png") no-repeat;
   background-size: 150%;
   background-position-x: center;
 

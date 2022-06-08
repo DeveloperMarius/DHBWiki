@@ -18,7 +18,7 @@ export default {
       this.active = value;
     },
     logout() {
-      localStorage.removeItem("userid");
+      localStorage.removeItem("dhbwiki_jwt");
       this.$router.push("/");
     },
     formatDate(created) {

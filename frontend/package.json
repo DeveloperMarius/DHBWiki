@@ -9,11 +9,28 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
+    "@types/node": "^17.0.41",
+    "assert": "^2.0.0",
     "axios": "^0.27.2",
+    "browserify": "^17.0.0",
     "core-js": "^3.8.3",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.0",
+    "crypto-js": "^4.1.1",
     "date-and-time": "^2.3.1",
+    "https-browserify": "^1.0.0",
+    "node-polyfill-webpack-plugin": "^1.1.4",
+    "os": "^0.1.2",
+    "os-browserify": "^0.3.0",
+    "react-app-rewired": "^2.1.9",
     "register-service-worker": "^1.7.2",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "stream": "^0.0.2",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
     "vue": "^2.6.14",
+    "vue-jwt-decode": "^0.1.0",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
   },
@@ -80,5 +97,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,vue}": "vue-cli-service lint"
+  },
+  "browser": {
+    "crypto": false
   }
 }

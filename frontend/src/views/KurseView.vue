@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
+import SettingsComponent from "@/components/SettingsComponent.vue";
 import Upload from "../components/UploadComponent.vue";
 
 export default {
@@ -17,7 +18,7 @@ export default {
   methods: {
     ...mapActions(["set"]),
     logout() {
-      localStorage.removeItem("userid");
+      localStorage.removeItem("dhbwiki_jwt");
       this.$router.push("/");
     },
   },
@@ -33,6 +34,7 @@ export default {
   },
   components: {
     Upload,
+    SettingsComponent,
   },
 };
 </script>
@@ -40,12 +42,22 @@ export default {
 <template>
   <div id="kurse">
     <Upload ref="uploadComponent" fach-prop="fach" thema-prop="thema"></Upload>
+    <settings-component ref="settingsComponent"></settings-component>
     <header>
       <nav>
         <router-link to="/" class="logo">
           <img src="../assets/logo.svg" alt="DHBWikiLogo"
         /></router-link>
-        <a href="#" @click.prevent="logout()">Abmelden</a>
+        <div class="flex">
+          <a href="#" @click.prevent="logout()">Abmelden</a>
+          <a
+            href="#"
+            @click.prevent="$refs.settingsComponent.open = true"
+            class="settings"
+          >
+            <img src="@/assets/Settings.png" alt="Settings"
+          /></a>
+        </div>
       </nav>
       <div>
         <h1>Fächerübersicht</h1>
@@ -146,6 +158,14 @@ main {
       margin-top: 1.04vw;
       margin-bottom: 1.56vw;
     }
+  }
+}
+.flex {
+  display: flex;
+  flex-direction: row;
+  img {
+    width: 2.5vw;
+    margin-left: 1vw;
   }
 }
 </style>

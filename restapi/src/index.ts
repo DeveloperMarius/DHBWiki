@@ -71,9 +71,9 @@ app.use(expressSession({
     saveUninitialized: true,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24,
-        sameSite: 'none',
-        secure: true,
-        httpOnly: false
+        sameSite: 'none'//,
+        //secure: true,
+        //httpOnly: false
     },
     resave: false
 }));

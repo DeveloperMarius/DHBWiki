@@ -16,6 +16,7 @@ import passwordResetTokenRoutes from "./routes/password_reset_token";
 import userRoutes from "./routes/user";
 import testRoutes from "./routes/test";
 import feedbackRoutes from "./routes/feedback";
+import calendarRoutes from "./routes/calendar";
 import {AnyError, Db} from "mongodb";
 import {config as dotenvConfig} from "dotenv";
 import cookieParser from "cookie-parser"
@@ -84,6 +85,7 @@ app.use("/api/user/password_reset", passwordResetTokenRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/test", testRoutes);
+app.use("/api/calendar", calendarRoutes);
 
 initDatabase((error: AnyError|null, db: Db) => {
     if(error){

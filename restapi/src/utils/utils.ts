@@ -71,10 +71,10 @@ export function mongo_delete(callback: (result: {}|null) => any, collection: Col
         })
 }
 
-export function init_router(mongoCollection: string): Router{
+export function init_router(mongoCollection: string|null = null): Router{
     const router = express.Router();
     router.use((req, res, next) => {
-        res.locals.collection = getDatabase().collection(mongoCollection);
+        res.locals.collection = mongoCollection !== null ? getDatabase().collection(mongoCollection) : null;
         next();
     });
     return router;

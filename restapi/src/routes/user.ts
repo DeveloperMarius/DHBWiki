@@ -56,7 +56,7 @@ router.post("/auth", (req, res) => {
         }
         if (result2) {
           delete result.password;
-          let token = jwt.sign({ user: result }, process.env.PRIVATE_KEY, {
+          const token = jwt.sign({ user: result }, process.env.PRIVATE_KEY, {
             expiresIn: "12h",
           });
           successResponse(res, new SuccessResponse({ jwt: token }));

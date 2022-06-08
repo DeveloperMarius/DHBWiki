@@ -71,6 +71,20 @@ router.post("/auth", (req, res) => {
   );
 });
 
+router.post("/exists", (req, res) => {
+    mongo_get(
+        (result: any) => {
+            if (result === null) {
+                errorResponse(res, new ErrorResponse("Benutzer nicht gefunden", 404));
+                return;
+            }
+            successResponse(res, new SuccessResponse());
+        },
+        res.locals.collection,
+        req.body
+    );
+});
+
 router.get("/:id/classes", (req, res) => {
   mongo_get_all(
     (result: any) => {

@@ -34,13 +34,7 @@ const options: cors.CorsOptions = {
     ],
     credentials: true,
     methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-    origin: '*',/*function(origin, callback) {
-        if(['https://localhost:8080', 'http://localhost:8080', 'https://dhbwiki.de'].indexOf(origin) !== -1 || !origin){
-            callback(null, true);
-        }else{
-            callback(new Error('Not allowed by CORS'));
-        }
-    },*/
+    origin: '*',
     preflightContinue: false,
 };
 
@@ -60,7 +54,7 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(expressValidator());
-//app.use(cookieParser());
+// app.use(cookieParser());
 
 dotenvConfig({
     path: __dirname + '/../res/.env'

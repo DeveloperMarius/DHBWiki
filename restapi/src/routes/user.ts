@@ -5,6 +5,7 @@ import {ErrorResponse, errorResponse} from "../utils/error_response";
 import {SuccessResponse, successResponse} from "../utils/success_response";
 import {attach_default_routes, init_router, mongo_get, mongo_get_all, mongo_post, mongo_update} from "../utils/utils";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"
 
 const router = init_router("users");
 
@@ -29,11 +30,6 @@ router.post('/auth', (req, res) => {
       filter.email = req.body.email;
    }
 
-   if(req.session.userid !== undefined){
-      errorResponse(res, new ErrorResponse("Sie sind bereits angemeldet", 403));
-      return;
-   }
-
    mongo_get((result: any) => {
       if(result === null){
          errorResponse(res, new ErrorResponse("Benutzer nicht gefunden", 404));
@@ -45,9 +41,9 @@ router.post('/auth', (req, res) => {
             return;
          }
          if(result2){
-            req.session.userid = result._id.toString();
             delete result.password;
-            successResponse(res, new SuccessResponse(result));
+            let token = jwt.sign({user: result}, process.env.PRIVATE_KEY, { algorithm: 'RS256', expiresIn: "12h"});
+            successResponse(res, new SuccessResponse({jwt: token}));
          }else{
             errorResponse(res, new ErrorResponse("Falsches Passwort", 401));
             return;

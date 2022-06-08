@@ -60,13 +60,13 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(expressValidator());
-app.use(cookieParser());
+//app.use(cookieParser());
 
 dotenvConfig({
     path: __dirname + '/../res/.env'
 });
 
-app.use(expressSession({
+/*app.use(expressSession({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     cookie: {
@@ -76,7 +76,7 @@ app.use(expressSession({
         //httpOnly: false
     },
     resave: false
-}));
+}));*/
 
 app.use("/", router);
 app.use("/api/area", areaRoutes);

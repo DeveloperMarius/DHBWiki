@@ -11,7 +11,7 @@ Vue.use(require("vue-moment"));
 
 // SweetAlert for ... you guessed it ... alerts
 import VueSweetalert2 from "vue-sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import "@sweetalert2/theme-borderless/borderless.min.css";
 Vue.use(VueSweetalert2);
 
 new Vue({

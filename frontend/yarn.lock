@@ -1453,6 +1453,11 @@
     magic-string "^0.25.0"
     string.prototype.matchall "^4.0.6"
 
+"@sweetalert2/theme-borderless@^5.0.11":
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/@sweetalert2/theme-borderless/-/theme-borderless-5.0.11.tgz#865617b63403e2f710d8eaf82323e08acddc7861"
+  integrity sha512-GYT19trxQFZfag+TDZU0K8xB4rqd3bouMXuBET60P342oUKJHDhO56oXKJUjzHYu3JEOAypm8icBLOapypqEQA==
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.npmmirror.com/@tootallnate/once/-/once-1.1.2.tgz"

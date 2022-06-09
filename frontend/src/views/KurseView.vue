@@ -80,8 +80,8 @@ export default {
       <li><h3>Vorlesungen morgen</h3></li>
       <li v-for="(date, i) of dates" :key="i">
         <span>
-          {{ date.dtstart.value | moment("LT") }} -
-          {{ date.dtend.value | moment("LT") }}
+          {{ date.dtstart.value | moment("subtract", "2 hours", "LT") }} Uhr -
+          {{ date.dtend.value | moment("subtract", "2 hours", "LT") }} Uhr
         </span>
         <div class="dots"></div>
         <span>

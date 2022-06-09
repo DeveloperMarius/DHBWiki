@@ -21,6 +21,7 @@
     "crypto-js": "^4.1.1",
     "date-and-time": "^2.3.1",
     "https-browserify": "^1.0.0",
+    "moment": "^2.29.3",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "os": "^0.1.2",
     "os-browserify": "^0.3.0",

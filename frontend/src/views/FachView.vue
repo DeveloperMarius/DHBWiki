@@ -22,7 +22,13 @@ export default {
     },
     logout() {
       localStorage.removeItem("dhbwiki_jwt");
-      this.$router.push("/");
+      this.$swal({
+        icon: "success",
+        title: "Erfolgreich abgemeldet",
+        text: "Du wirst jetzt zur Startseite weitergeleitet",
+      }).then(() => {
+        this.$router.push("/");
+      });
     },
     sorted(topic) {
       return this.mitschriften.filter((el) =>

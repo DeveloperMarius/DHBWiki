@@ -2,8 +2,8 @@
   <footer>
     <p>© {{ new Date().getFullYear() }} DHBWiki. All Rights Reserved.</p>
     <div class="flex">
-      <p>Privacy Policy</p>
-      <p>Terms of Service</p>
+      <router-link to="/privacy">Privacy Policy</router-link>
+      <router-link to="/impressum">Impressum</router-link>
     </div>
   </footer>
 </template>
@@ -18,13 +18,17 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  p {
+  p,
+  a {
     font: normal normal bold 0.68vw/0.99vw Noto Sans;
   }
   .flex {
     display: flex;
-    p:first-child {
-      margin-right: 3.65vw;
+    a {
+      all: unset;
+      font: normal normal bold 0.68vw/0.99vw Noto Sans;
+      margin-right: 1vw;
+      cursor: pointer;
     }
   }
 }

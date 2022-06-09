@@ -193,6 +193,7 @@ header {
 main {
   background: #171b29;
   padding: 4vw 7.79vw;
+  min-height: 50vh;
 
   .kategorie {
     .titel {

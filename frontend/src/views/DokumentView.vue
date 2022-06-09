@@ -96,6 +96,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 50vh;
 
   embed {
     width: 100%;

@@ -32,6 +32,16 @@ const routes = [
     component: Home,
   },
   {
+    path: "/impressum",
+    name: "Impressum",
+    component: () => import("@/views/ImpressumView"),
+  },
+  {
+    path: "/privacy",
+    name: "PrivacyPolicy",
+    component: () => import("@/views/PrivacyPolicyView"),
+  },
+  {
     path: "/kurse",
     name: "Kurse",
     component: () => import("@/views/KurseView"),
@@ -48,6 +58,10 @@ const routes = [
     name: "Dokument",
     component: () => import("@/views/DokumentView"),
     beforeEnter: is_authenticated,
+  },
+  {
+    path: "*",
+    redirect: "/",
   },
 ];
 

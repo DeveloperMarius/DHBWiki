@@ -176,6 +176,7 @@ main {
   grid-template-columns: repeat(4, 25%);
   place-items: center;
   row-gap: 4vw;
+  min-height: 50vh;
 
   .fach {
     display: flex;

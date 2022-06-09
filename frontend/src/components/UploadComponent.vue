@@ -81,7 +81,7 @@ export default {
         .catch((err) => {
           console.log(err);
           this.$swal({
-            icon: "info",
+            icon: "error",
             title: "Hochladen fehlgeschlagen",
             text: "Fehler beim abschicken der Datei.",
           });
@@ -89,7 +89,7 @@ export default {
       form.reset();
       this.open = false;
       this.$swal({
-        icon: "info",
+        icon: "success",
         title: "Datei hochgeladen",
         text: "Datei erfolgreich hochgeladen.",
       });

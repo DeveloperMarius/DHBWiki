@@ -25,6 +25,7 @@ export default new Vuex.Store({
     mitschriften: [],
     mitschrift: {},
     user: {},
+    dates: [],
   },
   mutations: {
     set(state, payload) {
@@ -54,6 +55,12 @@ export default new Vuex.Store({
     async setKurs(state, payload) {
       await axios.get(url + "course/" + payload).then((res) => {
         res.state = "kurs";
+        state.commit("set", res);
+      });
+    },
+    async setKalender(state) {
+      await axios.get(url + "calendar/tomorrow").then((res) => {
+        res.state = "dates";
         state.commit("set", res);
       });
     },

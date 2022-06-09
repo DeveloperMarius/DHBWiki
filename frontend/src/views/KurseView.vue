@@ -7,16 +7,17 @@ export default {
   name: "KurseView",
   data() {
     return {
-      names: ["course"],
+      names: ["course", "dates"],
       fach: "",
       thema: "",
     };
   },
   mounted() {
-    this.names.forEach((name) => this.set(name));
+    this.set("course");
+    this.setKalender();
   },
   methods: {
-    ...mapActions(["set"]),
+    ...mapActions(["set", "setKalender"]),
     logout() {
       localStorage.removeItem("dhbwiki_jwt");
       this.$router.push("/");
@@ -24,12 +25,18 @@ export default {
   },
   computed: {
     ...mapGetters(["get"]),
-    kurse() {
+    data() {
       let data = [];
       this.names.forEach((name) => {
         data[name] = this.get(name);
       });
-      return data["course"];
+      return data;
+    },
+    kurse() {
+      return this.data["course"];
+    },
+    dates() {
+      return this.data["dates"].events;
     },
   },
   components: {
@@ -63,6 +70,19 @@ export default {
         <h1>Fächerübersicht</h1>
       </div>
     </header>
+    <ul>
+      <li><h3>Vorlesungen morgen</h3></li>
+      <li v-for="(date, i) of dates" :key="i">
+        <span>
+          {{ date.dtstart.value | moment("LT") }} -
+          {{ date.dtend.value | moment("LT") }}
+        </span>
+        <div class="dots"></div>
+        <span>
+          {{ date.summary }}
+        </span>
+      </li>
+    </ul>
     <main>
       <div v-for="(kurs, i) in kurse" :key="i" class="fach">
         <div
@@ -120,6 +140,25 @@ header {
       font: normal normal 600 0.83vw/1.15vw Noto Sans;
       margin-bottom: 2.6vw;
     }
+  }
+}
+
+ul {
+  background: #171b29;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  list-style: none;
+  h3 {
+    margin-bottom: 0.5vw;
+    text-align: center;
+  }
+  li:not(:first-child) {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.2vw;
   }
 }
 

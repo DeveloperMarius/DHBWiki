@@ -1,6 +1,5 @@
 import express from "express";
 import compression from "compression";
-import expressValidator from "express-validator";
 import bodyParser from "body-parser";
 import {initDatabase} from "./database";
 import cors from "cors";
@@ -19,8 +18,6 @@ import feedbackRoutes from "./routes/feedback";
 import calendarRoutes from "./routes/calendar";
 import {AnyError, Db} from "mongodb";
 import {config as dotenvConfig} from "dotenv";
-import cookieParser from "cookie-parser"
-import expressSession from "express-session"
 
 const app = express();
 const port = 4001;
@@ -55,24 +52,10 @@ router.options('*', cors(options));
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(expressValidator());
-// app.use(cookieParser());
 
 dotenvConfig({
     path: __dirname + '/../res/.env'
 });
-
-/*app.use(expressSession({
-    secret: process.env.SESSION_SECRET,
-    saveUninitialized: true,
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24,
-        sameSite: 'none',
-        secure: false//,
-        //httpOnly: false
-    },
-    resave: false
-}));*/
 
 app.use("/", router);
 app.use("/api/area", areaRoutes);

@@ -6,7 +6,7 @@
       </button>
       <div class="left">
         <h1>Einstellungen</h1>
-        <form id="login">
+        <form id="settings">
           <input v-model="user.firstname" placeholder="Vorname" type="text" />
           <input v-model="user.lastname" placeholder="Nachname" type="text" />
           <input v-model="user.username" placeholder="Username" type="text" />

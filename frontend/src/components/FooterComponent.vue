@@ -1,12 +1,14 @@
 <template>
   <footer>
-    <p>© 2021 DHBWiki. All Rights Reserved.</p>
+    <p>© {{ new Date().getFullYear() }} DHBWiki. All Rights Reserved.</p>
     <div class="flex">
       <p>Privacy Policy</p>
       <p>Terms of Service</p>
     </div>
   </footer>
 </template>
+
+<script></script>
 
 <style lang="scss" scoped>
 footer {

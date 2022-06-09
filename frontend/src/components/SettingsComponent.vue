@@ -45,8 +45,7 @@ export default {
   methods: {
     ...mapActions(["update_user", "delete_user"]),
     deleteUser() {
-      if (confirm("Sicher, dass du deinen Account löschen willst?"))
-        return this.delete_user(this.user);
+      this.delete_user(this.user);
     },
   },
   computed: {

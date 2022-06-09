@@ -33,6 +33,7 @@
     "vue-jwt-decode": "^0.1.0",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.5.1",
+    "vue-sweetalert2": "^5.0.5",
     "vuex": "^3.6.2"
   },
   "devDependencies": {

@@ -32,6 +32,17 @@ export default {
           50;
       this.background = (this.window.scrollY / this.window.innerHeight) * 25;
     },
+    trigger_feedback() {
+      if (!this.feedback.email || !this.feedback.text) return;
+      this.send_feedback(this.feedback);
+      this.feedback.email = "";
+      this.feedback.text = "";
+      this.$swal({
+        icon: "info",
+        title: "Danke für dein Feedback",
+        text: "Wir werden deine Nachricht lesen und die schnellstmöglich Antworten.",
+      });
+    },
   },
   computed: {
     loggedin: () => localStorage.getItem("dhbwiki_jwt"),
@@ -129,16 +140,7 @@ export default {
             rows="10"
             v-model="feedback.text"
           ></textarea>
-          <a
-            @click.prevent="
-              if (!feedback.email || !feedback.text) return;
-              send_feedback(feedback);
-              feedback.email = '';
-              feedback.text = '';
-              alert('Danke für dein Feedback!');
-            "
-            >Abschicken</a
-          >
+          <a @click.prevent="trigger_feedback()">Abschicken</a>
         </form>
       </div>
     </main>

@@ -75,7 +75,11 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.error(err);
-          alert("Login fehlgeschlagen");
+          Vue.swal({
+            icon: "error",
+            title: "Fehler",
+            text: "Login fehlgeschlagen.",
+          });
         });
     },
     async register(state, payload) {
@@ -84,7 +88,11 @@ export default new Vuex.Store({
           email: payload.email,
         })
         .then(() => {
-          alert("Nutzer existiert bereits");
+          Vue.swal({
+            icon: "error",
+            title: "Fehler",
+            text: "Nutzer existiert bereits.",
+          });
         })
         .catch(() => {
           axios
@@ -104,7 +112,11 @@ export default new Vuex.Store({
       await axios
         .patch(url + "user/" + payload._id, payload)
         .then(() => {
-          alert("Daten aktualisiert, bitte melde dich neu an!");
+          Vue.swal({
+            icon: "info",
+            title: "Daten aktualisiert",
+            text: "Bitte melde dich erneut an.",
+          });
         })
         .catch((err) => console.error(err));
     },
@@ -112,7 +124,11 @@ export default new Vuex.Store({
       await axios
         .delete(url + "user/" + payload._id)
         .then(() => {
-          alert("Account gelöscht!");
+          Vue.swal({
+            icon: "info",
+            title: "Account gelöscht",
+            text: "Wenn wir etwas verbessern können, würden wir uns über Feedback freuen.",
+          });
           localStorage.removeItem("dhbwiki_jwt");
           router.push("/");
         })

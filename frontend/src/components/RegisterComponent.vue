@@ -85,9 +85,11 @@ export default {
     ...mapActions(["register"]),
     register_user() {
       if (this.user.password != this.password_repeat)
-        return alert(
-          "Registrieren fehlgeschlagen: Passwörter stimmen nicht überein"
-        );
+        return this.$swal({
+          icon: "error",
+          title: "Fehler beim Registrieren",
+          text: "Die Passwörter stimmen nicht überein",
+        });
       this.register(this.user);
       document.getElementById("register").reset();
     },

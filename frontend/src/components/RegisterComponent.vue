@@ -18,7 +18,7 @@
             >Jetzt anmelden!</a
           >
         </p>
-        <form id="register" @submit.prevent="register()">
+        <form id="register" @submit.prevent="register_user()">
           <input
             v-model="user.firstname"
             placeholder="Vorname"
@@ -65,7 +65,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import axios from "axios";
 
 export default {
   name: "RegisterComponent",
@@ -83,21 +82,16 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["insert"]),
-    register() {
+    ...mapActions(["register"]),
+    register_user() {
       if (this.user.password != this.password_repeat)
-        return alert(
-          "Registrieren fehlgeschlagen: Passwörter stimmen nicht überein"
-        );
-      axios
-        .post("https://dhbwiki.th1nk.media/api/user", this.user)
-        .then((res) => {
-          localStorage.setItem("session", res.data.data._id);
-          this.$router.push("/kurse");
-        })
-        .catch((err) => console.error(err));
+        return this.$swal({
+          icon: "error",
+          title: "Fehler beim Registrieren",
+          text: "Die Passwörter stimmen nicht überein",
+        });
+      this.register(this.user);
       document.getElementById("register").reset();
-      this.$router.push("/kurse");
     },
   },
 };

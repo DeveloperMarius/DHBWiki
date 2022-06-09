@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import Login from "@/components/LoginComponent.vue";
 import Register from "../components/RegisterComponent.vue";
 
@@ -13,14 +13,17 @@ export default {
       background: 0,
       sitzenbleiben: 0,
       login: false,
-      loggedin: localStorage.getItem("userid"),
+      feedback: {
+        email: null,
+        text: null,
+      },
     };
   },
   mounted() {
     this.names.forEach((name) => this.set(name));
   },
   methods: {
-    ...mapActions(["set"]),
+    ...mapActions(["send_feedback"]),
     handleScroll() {
       this.sitzenbleiben =
         this.window.scrollY -
@@ -29,16 +32,20 @@ export default {
           50;
       this.background = (this.window.scrollY / this.window.innerHeight) * 25;
     },
+    trigger_feedback() {
+      if (!this.feedback.email || !this.feedback.text) return;
+      this.send_feedback(this.feedback);
+      this.feedback.email = "";
+      this.feedback.text = "";
+      this.$swal({
+        icon: "info",
+        title: "Danke für dein Feedback",
+        text: "Wir werden deine Nachricht lesen und die schnellstmöglich Antworten.",
+      });
+    },
   },
   computed: {
-    ...mapGetters(["get"]),
-    data() {
-      let data = [];
-      this.names.forEach((name) => {
-        data[name] = this.get(name);
-      });
-      return data;
-    },
+    loggedin: () => localStorage.getItem("dhbwiki_jwt"),
   },
   components: {
     Login,
@@ -120,9 +127,21 @@ export default {
       <div id="feedback">
         <h1>Feedback</h1>
         <p>Deine Meinung ist uns wichig. Schicke uns jetzt dein Feedback!</p>
-        <input name="email" placeholder="Max@Mustermann.de" type="text" />
-        <textarea cols="5" name="feedback" rows="10"></textarea>
-        <a href="#abschicken">Abschicken</a>
+        <form @submit.prevent="">
+          <input
+            name="email"
+            placeholder="Max@Mustermann.de"
+            type="text"
+            v-model="feedback.email"
+          />
+          <textarea
+            cols="5"
+            name="feedback"
+            rows="10"
+            v-model="feedback.text"
+          ></textarea>
+          <a @click.prevent="trigger_feedback()">Abschicken</a>
+        </form>
       </div>
     </main>
   </div>
@@ -132,8 +151,8 @@ export default {
 header {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  background: url("../assets/HeaderBG.png");
+  height: 56.25vw;
+  background: url("../assets/HeaderBG.png") no-repeat;
   background-size: 150%;
   background-position-x: center;
 

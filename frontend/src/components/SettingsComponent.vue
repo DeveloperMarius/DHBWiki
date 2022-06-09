@@ -5,54 +5,53 @@
         <img alt="Close" src="../assets/close.png" />
       </button>
       <div class="left">
-        <h1>Anmelden</h1>
-        <p>
-          Noch keinen Account?
-
-          <a
-            href="#"
-            @click.prevent="
-              open = false;
-              $parent.$refs.registerComponent.open = true;
-            "
-            >Jetzt registrieren!</a
-          >
-        </p>
-        <form id="login" @submit.prevent="login_user()">
+        <h1>Einstellungen</h1>
+        <form id="settings">
+          <input v-model="user.firstname" placeholder="Vorname" type="text" />
+          <input v-model="user.lastname" placeholder="Nachname" type="text" />
+          <input v-model="user.username" placeholder="Username" type="text" />
           <input v-model="user.email" placeholder="E-Mail" type="email" />
-          <input
-            v-model="user.password"
-            placeholder="Passwort"
-            type="password"
-          />
-          <button type="submit">Anmelden</button>
+          <button type="submit" @click.prevent="update_user(user)">
+            Speichern
+          </button>
+          <button type="submit" @click.prevent="deleteUser()">
+            Account löschen
+          </button>
         </form>
       </div>
-      <div class="right"><img alt="Image" src="../assets/Login.png" /></div>
+      <div class="right">
+        <img alt="Image" src="../assets/Settings_Illustration.png" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "LoginComponent",
+  name: "SettingsComponent",
   data() {
     return {
       open: false,
       user: {
-        email: "",
-        password: "",
+        firstname: null,
       },
     };
   },
+  mounted() {
+    this.user = this.user_state;
+  },
   methods: {
-    ...mapActions(["login"]),
-    login_user() {
-      if (!this.user.email || !this.user.password) return;
-      this.login(this.user);
-      document.getElementById("login").reset();
+    ...mapActions(["update_user", "delete_user"]),
+    deleteUser() {
+      this.delete_user(this.user);
+    },
+  },
+  computed: {
+    ...mapGetters(["get"]),
+    user_state() {
+      return this.get("user");
     },
   },
 };

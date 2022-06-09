@@ -36,7 +36,7 @@ body {
   }
 }
 
-a:not(.logo),
+a:not(.logo):not(.settings),
 [type="submit"] {
   background: transparent linear-gradient(108deg, #fc0441 0%, #f62da8 100%) 0%
     0% no-repeat padding-box;

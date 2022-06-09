@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import router from "../router/index";
 
 Vue.use(Vuex);
 
@@ -13,6 +14,9 @@ const url = "https://dhbwiki.th1nk.media/api/";
 // Mitschrift /api/file/:_id {}
 // Datei /api/file/:_id/asset
 // Upload POST: /api/file/upload {}
+// Feedback POST: /api/feedback {}
+// User PATCH: /api/user/:_id {}
+// Kalender GET: /api/calendar/tomorrow {}
 
 export default new Vuex.Store({
   state: {
@@ -20,6 +24,8 @@ export default new Vuex.Store({
     kurs: {},
     mitschriften: [],
     mitschrift: {},
+    user: {},
+    dates: [],
   },
   mutations: {
     set(state, payload) {
@@ -27,6 +33,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    // Get methods
     async set(state, payload) {
       await axios.get(url + payload).then((res) => {
         res.state = payload;
@@ -51,9 +58,81 @@ export default new Vuex.Store({
         state.commit("set", res);
       });
     },
-    // C(R)UD Methods
-    async insert(state, payload) {
-      await axios.post(url + payload.route, payload.data);
+    async setKalender(state) {
+      await axios.get(url + "calendar/tomorrow").then((res) => {
+        res.state = "dates";
+        state.commit("set", res);
+      });
+    },
+    // Post methods
+    async login(_state, payload) {
+      payload.email = payload.email.toLowerCase();
+      await axios
+        .post(url + "user/auth", payload)
+        .then((res) => {
+          localStorage.setItem("dhbwiki_jwt", res.data.data.jwt);
+          router.push("/kurse");
+        })
+        .catch((err) => {
+          console.error(err);
+          Vue.swal({
+            icon: "error",
+            title: "Fehler",
+            text: "Login fehlgeschlagen.",
+          });
+        });
+    },
+    async register(state, payload) {
+      await axios
+        .post("https://dhbwiki.th1nk.media/api/user/exists", {
+          email: payload.email,
+        })
+        .then(() => {
+          Vue.swal({
+            icon: "error",
+            title: "Fehler",
+            text: "Nutzer existiert bereits.",
+          });
+        })
+        .catch(() => {
+          axios
+            .post(url + "user", payload)
+            .then(() => {
+              state.dispatch("login", payload);
+            })
+            .catch((err) => console.error(err));
+        });
+    },
+    async send_feedback(_state, payload) {
+      await axios
+        .post(url + "feedback", payload)
+        .catch((err) => console.error(err));
+    },
+    async update_user(_state, payload) {
+      await axios
+        .patch(url + "user/" + payload._id, payload)
+        .then(() => {
+          Vue.swal({
+            icon: "info",
+            title: "Daten aktualisiert",
+            text: "Bitte melde dich erneut an.",
+          });
+        })
+        .catch((err) => console.error(err));
+    },
+    async delete_user(_state, payload) {
+      await axios
+        .delete(url + "user/" + payload._id)
+        .then(() => {
+          Vue.swal({
+            icon: "info",
+            title: "Account gelöscht",
+            text: "Wenn wir etwas verbessern können, würden wir uns über Feedback freuen.",
+          });
+          localStorage.removeItem("dhbwiki_jwt");
+          router.push("/");
+        })
+        .catch((err) => console.error(err));
     },
   },
   getters: {

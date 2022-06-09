@@ -18,8 +18,14 @@ export default {
       this.active = value;
     },
     logout() {
-      localStorage.removeItem("userid");
-      this.$router.push("/");
+      localStorage.removeItem("dhbwiki_jwt");
+      this.$swal({
+        icon: "success",
+        title: "Erfolgreich abgemeldet",
+        text: "Du wirst jetzt zur Startseite weitergeleitet",
+      }).then(() => {
+        this.$router.push("/");
+      });
     },
     formatDate(created) {
       return date.format(created, "D.M.Y");

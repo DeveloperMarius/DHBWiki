@@ -1,38 +1,53 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
+import SettingsComponent from "@/components/SettingsComponent.vue";
 import Upload from "../components/UploadComponent.vue";
 
 export default {
   name: "KurseView",
   data() {
     return {
-      names: ["course"],
+      names: ["course", "dates"],
       fach: "",
       thema: "",
     };
   },
   mounted() {
-    this.names.forEach((name) => this.set(name));
+    this.set("course");
+    this.setKalender();
   },
   methods: {
-    ...mapActions(["set"]),
+    ...mapActions(["set", "setKalender"]),
     logout() {
-      localStorage.removeItem("userid");
-      this.$router.push("/");
+      localStorage.removeItem("dhbwiki_jwt");
+      this.$swal({
+        icon: "success",
+        title: "Erfolgreich abgemeldet",
+        text: "Du wirst jetzt zur Startseite weitergeleitet",
+      }).then(() => {
+        this.$router.push("/");
+      });
     },
   },
   computed: {
     ...mapGetters(["get"]),
-    kurse() {
+    data() {
       let data = [];
       this.names.forEach((name) => {
         data[name] = this.get(name);
       });
-      return data["course"];
+      return data;
+    },
+    kurse() {
+      return this.data["course"];
+    },
+    dates() {
+      return this.data["dates"].events;
     },
   },
   components: {
     Upload,
+    SettingsComponent,
   },
 };
 </script>
@@ -40,17 +55,40 @@ export default {
 <template>
   <div id="kurse">
     <Upload ref="uploadComponent" fach-prop="fach" thema-prop="thema"></Upload>
+    <settings-component ref="settingsComponent"></settings-component>
     <header>
       <nav>
         <router-link to="/" class="logo">
           <img src="../assets/logo.svg" alt="DHBWikiLogo"
         /></router-link>
-        <a href="#" @click.prevent="logout()">Abmelden</a>
+        <div class="flex">
+          <a href="#" @click.prevent="logout()">Abmelden</a>
+          <a
+            href="#"
+            @click.prevent="$refs.settingsComponent.open = true"
+            class="settings"
+          >
+            <img src="@/assets/Settings.png" alt="Settings"
+          /></a>
+        </div>
       </nav>
       <div>
         <h1>Fächerübersicht</h1>
       </div>
     </header>
+    <ul>
+      <li><h3>Vorlesungen morgen</h3></li>
+      <li v-for="(date, i) of dates" :key="i">
+        <span>
+          {{ date.dtstart.value | moment("subtract", "2 hours", "LT") }} Uhr -
+          {{ date.dtend.value | moment("subtract", "2 hours", "LT") }} Uhr
+        </span>
+        <div class="dots"></div>
+        <span>
+          {{ date.summary }}
+        </span>
+      </li>
+    </ul>
     <main>
       <div v-for="(kurs, i) in kurse" :key="i" class="fach">
         <div
@@ -111,6 +149,25 @@ header {
   }
 }
 
+ul {
+  background: #171b29;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  list-style: none;
+  h3 {
+    margin-bottom: 0.5vw;
+    text-align: center;
+  }
+  li:not(:first-child) {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.2vw;
+  }
+}
+
 main {
   background: #171b29;
   padding: 4vw 7.79vw;
@@ -146,6 +203,14 @@ main {
       margin-top: 1.04vw;
       margin-bottom: 1.56vw;
     }
+  }
+}
+.flex {
+  display: flex;
+  flex-direction: row;
+  img {
+    width: 2.5vw;
+    margin-left: 1vw;
   }
 }
 </style>

@@ -54,7 +54,7 @@ export default {
         topic: "",
         title: "",
         description: "",
-        user: localStorage.getItem("userid"),
+        user: "",
         file: "",
       },
     };
@@ -68,16 +68,31 @@ export default {
       }
     },
     uploadFile() {
+      this.user = this.$store.state.user._id;
       let form = document.getElementById("upload");
       let formData = new FormData(form);
       formData.append("file", this.file);
-      axios.post("https://dhbwiki.th1nk.media/api/file/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      axios
+        .post("https://dhbwiki.th1nk.media/api/file/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$swal({
+            icon: "info",
+            title: "Hochladen fehlgeschlagen",
+            text: "Fehler beim abschicken der Datei.",
+          });
+        });
       form.reset();
       this.open = false;
+      this.$swal({
+        icon: "info",
+        title: "Datei hochgeladen",
+        text: "Datei erfolgreich hochgeladen.",
+      });
     },
   },
 };

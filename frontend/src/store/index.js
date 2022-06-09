@@ -65,7 +65,7 @@ export default new Vuex.Store({
       });
     },
     // Post methods
-    async login(state, payload) {
+    async login(_state, payload) {
       payload.email = payload.email.toLowerCase();
       await axios
         .post(url + "user/auth", payload)
@@ -103,12 +103,12 @@ export default new Vuex.Store({
             .catch((err) => console.error(err));
         });
     },
-    async send_feedback(state, payload) {
+    async send_feedback(_state, payload) {
       await axios
         .post(url + "feedback", payload)
         .catch((err) => console.error(err));
     },
-    async update_user(state, payload) {
+    async update_user(_state, payload) {
       await axios
         .patch(url + "user/" + payload._id, payload)
         .then(() => {
@@ -120,7 +120,7 @@ export default new Vuex.Store({
         })
         .catch((err) => console.error(err));
     },
-    async delete_user(state, payload) {
+    async delete_user(_state, payload) {
       await axios
         .delete(url + "user/" + payload._id)
         .then(() => {

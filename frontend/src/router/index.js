@@ -6,7 +6,7 @@ import store from "../store/index";
 
 Vue.use(VueRouter);
 
-function is_authenticated(to, from, next) {
+function is_authenticated(_to, _from, next) {
   const token = localStorage.getItem("dhbwiki_jwt");
   let decoded = { exp: 0 };
   if (!token) next("/");

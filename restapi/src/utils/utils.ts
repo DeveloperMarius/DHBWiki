@@ -57,10 +57,10 @@ export function mongo_update(callback: (result: {}|null) => any, collection: Col
         })
 }
 
-export function mongo_delete(callback: (result: {}|null) => any, collection: Collection, id: number|string, data: {}){
+export function mongo_delete(callback: (result: {}|null) => any, collection: Collection, id: number|string){
     collection.deleteOne({
         _id: new ObjectId(id)
-    }, data)
+    })
         .then(result => {
             console.log("res", result);
             return callback(result);
@@ -136,6 +136,6 @@ export function attach_default_routes(router: Router){
                 return;
             }
             successResponse(res, new SuccessResponse(result));
-        }, collection, req.params.id, req.body);
+        }, collection, req.params.id);
     });
 }

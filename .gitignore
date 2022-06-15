@@ -5,3 +5,4 @@
 /restapi/node_modules
 /restapi/res/.env
 /node_modules
+/tests/.pytest_cache
